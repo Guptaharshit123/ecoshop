@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { FaHeart, FaShoppingCart, FaStar, FaFilter, FaSearch, FaTags, FaSpinner } from 'react-icons/fa';
 import { MdLocalShipping } from 'react-icons/md';
@@ -167,7 +168,9 @@ const dummyProducts = [
 
 const Home = () => {
   const { addToCart } = useContext(CartContext);
-  const [searchQuery, setSearchQuery] = useState('');
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const [searchQuery, setSearchQuery] = useState(queryParams.get('search') || '');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
   const [sortBy, setSortBy] = useState('featured');
@@ -217,6 +220,13 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const searchParam = queryParams.get('search');
+    if (searchParam !== null) {
+      setSearchQuery(searchParam);
+    }
+  }, [location.search]);
+
+  useEffect(() => {
     const loadProductImages = async () => {
       setIsLoading(true);
       const imagePromises = filteredProducts.map(async (product) => {
@@ -257,7 +267,7 @@ const Home = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="search-input"
             />
-            <FaSearch className="search-icon" />
+            <FaSearch className="search-icon" onClick={() => setSearchQuery(searchQuery)} />
           </div>
           <p className="subtitle">Explore our curated collection of premium products</p>
         </div>
