@@ -6,6 +6,9 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Confirmation from "./pages/Confirmation";
+import CategoryPage from "./pages/CategoryPage";
+import DealsPage from "./pages/DealsPage";
+import NewArrivalsPage from "./pages/NewArrivalsPage";
 import Navbar from "./components/Navbar";
 import { CartProvider } from "./context/CartContext";
 import './styles.css';
@@ -32,6 +35,9 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
           <Route path="/confirmation" element={<Confirmation />} />
+          <Route path="/category/:category" element={<CategoryPage />} />
+          <Route path="/deals" element={<DealsPage />} />
+          <Route path="/new-arrivals" element={<NewArrivalsPage />} />
         </Routes>
       </Router>
     </CartProvider>
