@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
-import { FaCreditCard, FaLock, FaMapMarkerAlt, FaSpinner } from 'react-icons/fa';
+import { FaCreditCard, FaLock, FaSpinner } from 'react-icons/fa';
 import { generateProductImage } from '../utils/imageGenerator';
 
 function Checkout() {
@@ -20,6 +20,7 @@ function Checkout() {
   });
   const [errors, setErrors] = useState({});
   const [productImages, setProductImages] = useState({});
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ function Checkout() {
     };
 
     loadProductImages();
-  }, [cartItems]);
+  }, [cartItems, productImages]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

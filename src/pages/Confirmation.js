@@ -1,9 +1,8 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaCheckCircle, FaBox, FaEnvelope } from 'react-icons/fa';
 
 function Confirmation() {
-  const navigate = useNavigate();
   const orderNumber = Math.floor(100000 + Math.random() * 900000);
 
   return (

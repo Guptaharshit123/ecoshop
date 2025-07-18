@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { FaHeart, FaShoppingCart, FaStar, FaFilter, FaSearch, FaTags, FaSpinner } from 'react-icons/fa';
@@ -204,7 +204,7 @@ const dummyProducts = [
 const Home = ({ filterType, initialCategory }) => {
   const { addToCart } = useContext(CartContext);
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
+  const queryParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
   const [searchQuery, setSearchQuery] = useState(queryParams.get('search') || '');
   const [selectedCategory, setSelectedCategory] = useState(initialCategory || 'all');
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });

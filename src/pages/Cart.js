@@ -14,6 +14,7 @@ function Cart() {
   } = useContext(CartContext);
 
   const [productImages, setProductImages] = useState({});
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -34,7 +35,7 @@ function Cart() {
     };
 
     loadProductImages();
-  }, [cartItems]);
+  }, [cartItems, productImages]);
 
   const handleQuantityChange = (itemId, currentQuantity, change) => {
     if (currentQuantity + change >= 1) {
