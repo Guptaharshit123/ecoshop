@@ -15,7 +15,6 @@ const categories = [
 
 const dummyProducts = [
   // Electronics Category
-
   {
     id: 1,
     name: 'Premium Wireless Headphones',
@@ -29,7 +28,7 @@ const dummyProducts = [
     stock: 15,
     shipping: 'Free Shipping',
     features: ['Active Noise Cancellation', 'Bluetooth 5.0', '40h Battery Life'],
-    imagePrompt: 'ultra realistic premium wireless headphones with sleek design, studio quality'
+    imagePrompt: 'electronics'
   },
   {
     id: 2,
@@ -44,7 +43,7 @@ const dummyProducts = [
     stock: 20,
     shipping: 'Free Shipping',
     features: ['Heart Rate Monitor', 'ECG Sensor', 'Sleep Tracking'],
-    imagePrompt: 'modern smartwatch with fitness tracking display, premium metallic finish'
+    imagePrompt: 'electronics'
   },
   {
     id: 3,
@@ -59,7 +58,7 @@ const dummyProducts = [
     stock: 8,
     shipping: 'Free Shipping',
     features: ['4K Resolution', 'Smart TV Features', 'HDR Support'],
-    imagePrompt: 'modern 55 inch smart tv with thin bezels on stylish stand'
+    imagePrompt: 'electronics'
   },
   {
     id: 4,
@@ -74,7 +73,7 @@ const dummyProducts = [
     stock: 5,
     shipping: 'Free Shipping',
     features: ['RTX 3070 Graphics', '16GB RAM', '1TB SSD'],
-    imagePrompt: 'sleek gaming laptop with RGB keyboard and slim design'
+    imagePrompt: 'electronics'
   },
 
   // Fashion Category
@@ -91,7 +90,7 @@ const dummyProducts = [
     stock: 10,
     shipping: 'Free Shipping',
     features: ['Genuine Leather', 'Multiple Compartments', 'Detachable Strap'],
-    imagePrompt: 'luxury leather handbag with gold hardware, professional product photography'
+    imagePrompt: 'fashion'
   },
   {
     id: 6,
@@ -106,7 +105,7 @@ const dummyProducts = [
     stock: 30,
     shipping: 'Free Shipping',
     features: ['Eco-friendly Material', 'Alignment Lines', 'Extra Thick Padding'],
-    imagePrompt: 'premium yoga mat with alignment lines, lifestyle product photography'
+    imagePrompt: 'fashion'
   },
   {
     id: 7,
@@ -121,7 +120,7 @@ const dummyProducts = [
     stock: 15,
     shipping: 'Free Shipping',
     features: ['UV Protection', 'Polarized Lenses', 'Premium Case'],
-    imagePrompt: 'luxury sunglasses with gold frames on marble surface'
+    imagePrompt: 'fashion'
   },
   {
     id: 8,
@@ -136,7 +135,7 @@ const dummyProducts = [
     stock: 8,
     shipping: 'Free Shipping',
     features: ['Automatic Movement', 'Sapphire Crystal', 'Genuine Leather'],
-    imagePrompt: 'luxury automatic watch with leather strap on dark background'
+    imagePrompt: 'fashion'
   },
 
   // Home & Living Category
@@ -153,7 +152,7 @@ const dummyProducts = [
     stock: 12,
     shipping: 'Standard Shipping',
     features: ['Hidden Storage', 'Tempered Glass Top', 'Solid Wood Frame'],
-    imagePrompt: 'modern coffee table with storage, contemporary furniture photography'
+    imagePrompt: 'home'
   },
   {
     id: 10,
@@ -168,7 +167,7 @@ const dummyProducts = [
     stock: 15,
     shipping: 'Free Shipping',
     features: ['HD Cameras', 'Motion Sensors', 'Mobile App'],
-    imagePrompt: 'modern home security camera system with smart features'
+    imagePrompt: 'home'
   },
   {
     id: 11,
@@ -183,7 +182,7 @@ const dummyProducts = [
     stock: 20,
     shipping: 'Free Shipping',
     features: ['Egyptian Cotton', 'Duvet Cover', 'Pillowcases'],
-    imagePrompt: 'luxury white bedding set with textured duvet cover'
+    imagePrompt: 'home'
   },
   {
     id: 12,
@@ -198,7 +197,7 @@ const dummyProducts = [
     stock: 5,
     shipping: 'Free Shipping',
     features: ['Voice Control', 'Smart Display', 'Connected Apps'],
-    imagePrompt: 'modern smart kitchen appliances with stainless steel finish'
+    imagePrompt: 'home'
   }
 ];
 
@@ -214,14 +213,14 @@ const Home = ({ filterType, initialCategory }) => {
   const [favorites, setFavorites] = useState([]);
 
   const isNewArrival = product => product.tags.includes('new-arrival');
-const isDeal = product => product.tags.includes('deal');
+  const isDeal = product => product.tags.includes('deal');
 
-const filteredProducts = dummyProducts
-  .filter(product => {
-    if (filterType === 'new-arrivals') return isNewArrival(product);
-    if (filterType === 'deals') return isDeal(product);
-    return true;
-  })
+  const filteredProducts = dummyProducts
+    .filter(product => {
+      if (filterType === 'new-arrivals') return isNewArrival(product);
+      if (filterType === 'deals') return isDeal(product);
+      return true;
+    })
     .filter(product => {
       const matchesSearch = searchQuery === '' || 
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -268,14 +267,14 @@ const filteredProducts = dummyProducts
     if (searchParam !== null) {
       setSearchQuery(searchParam);
     }
-  }, [location.search]);  // Remove queryParams from dependency array since it's derived from location.search
+  }, [queryParams]);
 
   useEffect(() => {
     const loadProductImages = async () => {
       setIsLoading(true);
       const imagePromises = filteredProducts.map(async (product) => {
         if (!productImages[product.id]) {
-          const imageUrl = await generateProductImage(product.name.toLowerCase());
+          const imageUrl = await generateProductImage(product.imagePrompt);
           setProductImages(prev => ({
             ...prev,
             [product.id]: imageUrl
